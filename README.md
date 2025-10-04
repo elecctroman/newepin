@@ -20,3 +20,4 @@ Laravel 10 based digital goods platform for selling E-PINs, license keys, and di
 
 Use Laravel Horizon or another queue worker for production deployments.
 
+

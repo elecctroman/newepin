@@ -32,7 +32,7 @@ fi
 
 export DEBIAN_FRONTEND=noninteractive
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-PROJECT_DIR="$SCRIPT_DIR"
+
 
 APP_ENVIRONMENT="${APP_ENV:-production}"
 APP_URL_VALUE="${APP_URL:-https://example.com}"
@@ -124,8 +124,7 @@ log "Proje dizinine geçiliyor: $PROJECT_DIR"
 cd "$PROJECT_DIR"
 
 if [[ ! -f .env ]]; then
-    log ".env dosyası oluşturuluyor"
-    cp .env.example .env
+
 fi
 
 log "MySQL veritabanı ve kullanıcı yapılandırılıyor"
