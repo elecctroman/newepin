@@ -32,33 +32,7 @@ fi
 
 export DEBIAN_FRONTEND=noninteractive
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-PROJECT_DIR_DEFAULT="${PROJECT_PATH:-$SCRIPT_DIR}"
 
-if [[ $# -ge 1 ]]; then
-    PROJECT_DIR="$1"
-else
-    PROJECT_DIR="$PROJECT_DIR_DEFAULT"
-fi
-
-if [[ "$PROJECT_DIR" == "/" ]]; then
-    error "PROJECT_DIR kök dizin olamaz."
-    exit 1
-fi
-
-log "Proje dizini: $PROJECT_DIR"
-
-mkdir -p "$PROJECT_DIR"
-
-if [[ ! -f "$PROJECT_DIR/composer.json" ]]; then
-    if [[ -n "${REPO_URL:-}" ]]; then
-        log "Uygulama deposu klonlanıyor: $REPO_URL"
-        find "$PROJECT_DIR" -mindepth 1 -maxdepth 1 -exec rm -rf {} + 2>/dev/null || true
-        git clone "$REPO_URL" "$PROJECT_DIR"
-    else
-        error "${PROJECT_DIR} içinde Laravel uygulaması bulunamadı. Scripti projenin kök dizininden çalıştırın veya REPO_URL değeri sağlayın."
-        exit 1
-    fi
-fi
 
 APP_ENVIRONMENT="${APP_ENV:-production}"
 APP_URL_VALUE="${APP_URL:-https://example.com}"
@@ -150,13 +124,7 @@ log "Proje dizinine geçiliyor: $PROJECT_DIR"
 cd "$PROJECT_DIR"
 
 if [[ ! -f .env ]]; then
-    if [[ -f .env.example ]]; then
-        log ".env dosyası oluşturuluyor"
-        cp .env.example .env
-    else
-        error "${PROJECT_DIR}/.env.example bulunamadı."
-        exit 1
-    fi
+
 fi
 
 log "MySQL veritabanı ve kullanıcı yapılandırılıyor"
