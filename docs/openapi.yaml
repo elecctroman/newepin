@@ -1,0 +1,63 @@
+openapi: 3.0.3
+info:
+  title: NewEpin API
+  version: 1.0.0
+servers:
+  - url: https://api.newepin.local/api
+paths:
+  /auth/register:
+    post:
+      summary: Register a new user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [name, email, password]
+              properties:
+                name:
+                  type: string
+                email:
+                  type: string
+                password:
+                  type: string
+      responses:
+        '200':
+          description: Registered successfully
+  /products:
+    get:
+      summary: List products
+      security:
+        - sanctum: []
+      responses:
+        '200':
+          description: List of products
+  /orders:
+    post:
+      summary: Create order
+      security:
+        - sanctum: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [product_id, quantity, payment_method]
+              properties:
+                product_id:
+                  type: integer
+                quantity:
+                  type: integer
+                payment_method:
+                  type: string
+      responses:
+        '200':
+          description: Order created
+components:
+  securitySchemes:
+    sanctum:
+      type: apiKey
+      in: header
+      name: Authorization
